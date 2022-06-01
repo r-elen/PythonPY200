@@ -22,5 +22,5 @@ if __name__ == "__main__":
     print(list_nodes)
 
     # распечатать значения узлов
-    for i in list_nodes:
-        print(i.value)
+    for node in list_nodes:
+        print(node.value)

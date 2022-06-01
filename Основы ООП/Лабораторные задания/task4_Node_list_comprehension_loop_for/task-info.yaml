@@ -33,7 +33,7 @@ files:
     status: Solved
     encrypted_possible_answer: '[Node(value) for value in range(10)]'
   - offset: 677
-    length: 76
+    length: 82
     placeholder_text: '# TODO распечатать значения узлов'
     initial_state:
       length: 33

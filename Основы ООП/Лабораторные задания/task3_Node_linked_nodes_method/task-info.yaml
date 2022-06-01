@@ -10,7 +10,7 @@ files:
   visible: true
   placeholders:
   - offset: 1025
-    length: 3
+    length: 101
     placeholder_text: '...  # TODO реализовать функцию'
     initial_state:
       length: 31
@@ -19,7 +19,7 @@ files:
     selected: true
     status: Unchecked
     encrypted_possible_answer: left_node.set_next(right_node)
-  - offset: 1114
+  - offset: 1212
     length: 100
     placeholder_text: '...  # TODO связать между собой два узла с помощью функции
       linked_nodes'
