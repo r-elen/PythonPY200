@@ -12,24 +12,29 @@ class Node:
         """
         self.value = value
 
-        # TODO установить значение следующего узла с помощью метода set_next
+        # установить значение следующего узла с помощью метода set_next
+        self.next_ = None
+        self.set_next(next_)
 
     def __repr__(self) -> str:
-        return f"Node({self.value}, {self.next})"
+        return f"Node({self.value}, {self.next_})"
 
-    def is_valid(self, node: Any) -> None:
-       # TODO метод проверки корректности связываемого узла
-        ...
+    def is_valid(self, node: Any) -> None:  # метод проверки корректности связываемого узла
+        if not isinstance(node, type(Node)):
+            raise TypeError("Переданный в качестве аргумента узел не являектся объектом типа Node")
 
-    def set_next(self, next_: Optional["Node"] = None) -> None:
-        # TODO метод должен проверять корректность узла и устанавливать значение атрибуту next
-        ...
+    def set_next(self, next_: Optional["Node"]) -> None:
+        # метод должен проверять корректность узла и устанавливать значение атрибуту next
+        if not isinstance(next_, (Node, type(None))):
+            raise TypeError("Не корректный узел")
+        self.next_ = next_
 
 
 if __name__ == '__main__':
-    # TODO инициализируйте два узла с любыми значеними
+    first_node = Node(1)  # инициализируйте два узла с любыми значеними
+    second_node = Node(2)
 
-    # TODO свяжите первый узел со вторым
+     # свяжите первый узел со вторым
 
     print(first_node)
     print(second_node)
