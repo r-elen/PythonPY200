@@ -6,7 +6,8 @@ from node import Node
 class LinkedList:
     def __init__(self, data: Iterable = None):
         """Конструктор связного списка"""
-        ...  # TODO добавить указатель на первый элемент
+        self.len = 0
+        self.head: Optional[Node] = None  # добавить указатель на первый элемент
 
         self.list_nodes = []
         if data is not None:
@@ -15,7 +16,9 @@ class LinkedList:
     def init_linked_list(self, data: Iterable):
         """ Метод, который создает вспомогательный список и связывает в нём узлы. """
         self.list_nodes = [Node(value) for value in data]
-        ...  # TODO инициализировать указатель на первый элемент
+        # инициализировать указатель на первый элемент
+        self.head = self.list_nodes[0]
+        self.len = len(self.list_nodes)
 
         for i in range(len(self.list_nodes) - 1):
             current_node = self.list_nodes[i]
@@ -37,16 +40,25 @@ class LinkedList:
 
     def step_by_step_on_nodes(self, index: int) -> Node:
         """ Функция выполняет перемещение по узлам до указанного индекса. И возвращает узел. """
-        # TODO проверка правильности типа индекса
+        # проверка правильности типа индекса
+        if not isinstance(index, int):
+            raise TypeError('неверный тип индекса. ожидается int')
 
-        current_node = ...  # TODO чему равен начальный элемент?
-        ...  # TODO с помощью цикла for добраться до нужного узла
+        if not 0 <= index < self.len:
+            raise IndexError('индекс вне границ')
+
+        current_node = self.head  # чему равен начальный элемент?
+        # с помощью цикла for добраться до нужного узла
+        for _ in range(index):
+            current_node = current_node.next
 
         return current_node
 
     def __getitem__(self, index: int) -> Any:
         """ Метод возвращает значение узла по указанному индексу. """
-        ...  # TODO метод должен возвращать значение узла
+        # метод должен возвращать значение узла
+        node = self.step_by_step_on_nodes(index)
+        return node.value
 
 
 if __name__ == "__main__":
