@@ -34,10 +34,7 @@ def linked_nodes(left_node: Node, right_node: Optional["Node"] = None) -> None:
     :param left_node: Левый или предыдущий узел
     :param right_node: Правый или следующий узел
     """
-    for i in range(len(list)-1):
-        # left - concurrent [i]
-        # right - next [i+1]
-        ...
+    left_node.set_next(right_node)
 
 
 if __name__ == '__main__':

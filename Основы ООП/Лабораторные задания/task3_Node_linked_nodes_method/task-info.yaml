@@ -10,16 +10,16 @@ files:
   visible: true
   placeholders:
   - offset: 1025
-    length: 101
+    length: 30
     placeholder_text: '...  # TODO реализовать функцию'
     initial_state:
       length: 31
       offset: 1025
     initialized_from_dependency: false
     selected: true
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: left_node.set_next(right_node)
-  - offset: 1212
+  - offset: 1141
     length: 100
     placeholder_text: '...  # TODO связать между собой два узла с помощью функции
       linked_nodes'
@@ -28,7 +28,7 @@ files:
       offset: 1142
     initialized_from_dependency: false
     selected: true
-    status: Unchecked
+    status: Solved
     encrypted_possible_answer: linked_nodes(first_node, second_node)
   text: |
     from typing import Any, Optional
@@ -82,5 +82,8 @@ files:
 - name: __init__.py
   visible: false
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Tue, 14 Jun 2022 10:15:03 UTC
 record: -1
