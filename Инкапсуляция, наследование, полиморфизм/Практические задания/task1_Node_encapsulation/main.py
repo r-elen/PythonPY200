@@ -12,7 +12,7 @@ class Node:
         """
         self.value = value
 
-        self.next = None  # TODO заменить на private
+        self.next = None  # заменить на private
         self.set_next(next_)
 
     def __repr__(self) -> str:
@@ -27,7 +27,7 @@ class Node:
 
     def set_next(self, next_: Optional["Node"] = None) -> None:
         self.is_valid(next_)
-        self.next = next_  # TODO заменить на private
+        self.next = next_  # заменить на private
 
 
 if __name__ == "__main__":

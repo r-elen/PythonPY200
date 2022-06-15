@@ -16,7 +16,7 @@ class LinkedList:
 
     def append(self, value: Any):
         """ Добавление элемента в конец связного списка. """
-        append_node = Node(value)
+        append_node = Node(value)  # TODO исправить Node
 
         if self.head is None:
             self.head = self.tail = append_node
@@ -70,4 +70,19 @@ class LinkedList:
         return f"{self.to_list()}"
 
 
-# TODO Реализовать класс DoubleLinkedList
+class DoubleLinkedList(LinkedList):
+    def __init__(self, data: Iterable = None):
+        super().__init__(data)
+
+    @staticmethod
+    def linked_nodes(left_node: Node, right_node: Optional[Node] = None) -> None:
+        """
+        Функция, которая связывает между собой два узла.
+
+        :param left_node: Левый или предыдущий узел
+        :param right_node: Правый или следующий узел
+        """
+        # left_node.next = right_node
+        right_node.prev = left_node
+
+
