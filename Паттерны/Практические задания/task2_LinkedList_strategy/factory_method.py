@@ -15,7 +15,7 @@ class SimpleFileFactoryMethod(DriverFactoryMethod):
 
     @classmethod
     def get_driver(cls) -> IStructureDriver:
-        filename = input('Введите название текстового файла: (.txt)').strip()
+        filename = input('Введите название текстового файла: (.txt) ').strip()
         filename = filename or cls.DEFAULT_NAME
         if not filename.endswith('.txt'):
             filename = f'{filename}.txt'

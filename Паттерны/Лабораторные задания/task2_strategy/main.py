@@ -1,4 +1,5 @@
 from typing import Iterable
+from typing import Optional
 
 from linked_list import LinkedList
 from drivers import IStructureDriver
@@ -8,9 +9,16 @@ from factory_method import SimpleFileFactoryMethod, JsonFileDriverFactoryMethod
 class LinkedListWithDriver(LinkedList):
     def __init__(self, data: Iterable = None, driver: IStructureDriver = None):
         super().__init__(data)
-        self.driver = driver
+        self._driver = driver
 
-    # TODO свойство для driver (getter + setter)
+    @property  # свойство для driver (getter + setter)
+    def driver(self):
+        return self._driver
+
+    @driver.setter
+    def driver(self, driver: IStructureDriver):
+        print("Вызван setter")
+        self._driver = driver
 
     def read(self):
         """ С помощью драйвера считать данные и поместить их в LinkedList. """
@@ -26,9 +34,11 @@ class LinkedListWithDriver(LinkedList):
 
 if __name__ == '__main__':
     ll = LinkedListWithDriver()
-    ll.driver = ...  # TODO инициализировать SimpleFileDriver
+    print("Считать данные из файла input.txt")
+    ll.driver = SimpleFileFactoryMethod.get_driver()  # инициализировать SimpleFileDriver
     ll.read()
     print(ll)
 
-    ll.driver = ...  # TODO инициализировать JsonFileDriver
+    print("Записать данные в json файл по умолчанию")
+    ll.driver = JsonFileDriverFactoryMethod.get_driver()  # инициализировать JsonFileDriver
     ll.write()

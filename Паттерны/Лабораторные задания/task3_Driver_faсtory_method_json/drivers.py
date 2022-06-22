@@ -1,5 +1,5 @@
 import json
-from typing import Sequence
+from typing import Sequence, Iterable
 from abc import ABC, abstractmethod
 
 
@@ -41,12 +41,29 @@ class SimpleFileDriver(IStructureDriver):
         return f"{self.__class__.__name__}(\"{self.filename}\")"
 
 
-# TODO
+class JsonFileDriver(IStructureDriver):  # Реализовать класс JsonFileDriver
+    def __init__(self, json_filename):
+        self.json_filename = json_filename
+
+    def read(self) -> Iterable:
+        with open(self.json_filename) as f:  # считать содержимое json файл input.json
+            data = json.load(f)
+            if not isinstance(data, list):
+                raise TypeError()
+            return data
+
+    def write(self, data: Iterable) -> None:
+        data = [value for value in data]
+        with open(self.json_filename, "w", encoding="utf-8") as file:
+            json.dump(data, file, indent=4, ensure_ascii=False)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(\"{self.json_filename}\")"
 
 
 if __name__ == '__main__':
     write_data = [1, 2, 3]
-    driver = SimpleFileDriver('tmp.txt')
+    driver = JsonFileDriver('tmp.json')
     driver.write(write_data)
 
     read_data = driver.read()
