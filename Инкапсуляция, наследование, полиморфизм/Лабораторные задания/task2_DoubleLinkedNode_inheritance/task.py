@@ -52,9 +52,9 @@ class DoubleLinkedNode(Node):
         return self._prev
 
     @prev.setter
-    def prev(self, prev: Optional["Node"]):
-        self.is_valid(prev)
-        self._prev = prev
+    def prev(self, prev_: Optional["Node"]):
+        self.is_valid(prev_)
+        self._prev = prev_
 
 
 if __name__ == '__main__':
