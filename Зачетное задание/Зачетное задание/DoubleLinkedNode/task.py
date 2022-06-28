@@ -1,3 +1,5 @@
+from typing import Any, Optional
+
 class Node:
     """ Класс, который описывает узел связного списка. """
 
@@ -8,7 +10,7 @@ class Node:
         :param next_: ссылка на следующий узел (если нет, то None)
         """
         self.value = value
-        self.next = next_  # self.next - вызывается next.setter
+        self._next = next_  # self.next - вызывается next.setter
 
     @classmethod
     def is_valid(cls, node:Any) -> None:
