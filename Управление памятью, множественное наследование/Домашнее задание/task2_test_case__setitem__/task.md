@@ -1,1 +1,1 @@
-Покрыть тестами метод `__getitem__` класса LinkedList.
+Покрыть тестами метод `__setitem__` класса LinkedList.

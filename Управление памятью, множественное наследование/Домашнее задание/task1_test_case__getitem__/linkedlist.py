@@ -1,4 +1,4 @@
-from typing import Iterator, Any, Iterable, Optional
+from typing import Any, Iterable, Optional, Iterator
 
 from node import Node
 
@@ -52,6 +52,7 @@ class LinkedList:
 
     def __getitem__(self, index: int) -> Any:
         """ Метод возвращает значение узла по указанному индексу. """
+        print("Вызван метод \"__getitem__\"")
         node = self.step_by_step_on_nodes(index)
         return node.value
 
@@ -70,20 +71,20 @@ class LinkedList:
         return f"{self.to_list()}"
 
     def nodes_iterator(self) -> Iterator[Node]:
-        current_node = self.head
+        current_node = self.head  # написать функцию-генератор, которая будет возвращать узлы связного списка
         for _ in range(self.len):
             yield current_node
             current_node = current_node.next
 
-    def clear(self):
-        self.head = None  # реализовать очистку списка
-        self.tail = None
-        self.len = 0
+    def __iter__(self) -> Iterator[Any]:
+        print("Вызван метод \"__iter__\"")
+        for node in self.nodes_iterator():  # реализовать функцию-генератор по значениям списка
+            yield node.value
 
 
 if __name__ == '__main__':
-    ll = LinkedList([1, 2, 3, 4, 5])
-    print(ll)
+    list_ = [1, 2, 3]
+    linked_list = LinkedList(list_)
 
-    ll.clear()
-    print(ll)
+    for value in linked_list:
+        print(value)
