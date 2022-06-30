@@ -3,11 +3,6 @@ files:
 - name: __init__.py
   visible: false
   learner_created: false
-- name: node.py
-  visible: true
-  text: |
-    ...
-  learner_created: false
 - name: tests/__init__.py
   visible: false
   learner_created: false
@@ -21,6 +16,11 @@ files:
     class TestCase(unittest.TestCase):
         def test_add(self):
             ...
+  learner_created: false
+- name: node.py
+  visible: true
+  text: |
+    ...
   learner_created: false
 - name: task.py
   visible: true
