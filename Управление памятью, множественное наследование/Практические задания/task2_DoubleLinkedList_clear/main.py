@@ -1,5 +1,5 @@
 from typing import Any, Optional
-import weakref
+from weakref import ref
 
 from node import Node
 from linked_list import LinkedList
@@ -12,16 +12,16 @@ class DoubleLinkedNode(Node):
 
     @property
     def prev(self):
-        return self._prev  # TODO объект теперь вызываемый
+        return None if self._prev is None else self._prev()  # объект теперь вызываемый
 
     @prev.setter
     def prev(self, prev: Optional["Node"]):
         self.is_valid(prev)
-        self._prev = prev  # TODO сделать слабую ссылку
+        self._prev = None if prev is None else ref(prev)  # сделать слабую ссылку
 
     def __repr__(self) -> str:
         next_prev = None if self.prev is None else f"DoubleLinkedNode({self.prev})"
-        next_repr = None if self.next is None else f"DoubleLinkedNode({self.next})"  # todo make all
+        next_repr = None if self.next is None else f"DoubleLinkedNode({self.next})"  # make all
 
         return f"DoubleLinkedNode({self.value}, {next_prev}, {next_repr})"
 

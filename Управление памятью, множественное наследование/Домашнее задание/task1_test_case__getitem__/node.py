@@ -11,7 +11,6 @@ class Node:
         :param next_: следующий узел, если он есть
         """
         self.value = value
-
         self.next = next_  # вызовется setter
 
     def __repr__(self) -> str:
@@ -32,6 +31,3 @@ class Node:
     def next(self, next_: Optional["Node"]):
         self.is_valid(next_)
         self._next = next_
-
-    def __del__(self):
-        print("Вызван метод \"__del__\"")
