@@ -48,6 +48,6 @@ class DoubleLinkedList(LinkedList):
 if __name__ == "__main__":
     ll = DoubleLinkedList([1, 2, 3, 4, 5])
 
-    ll.clear()
+    # ll.clear()
 
     print(ll)

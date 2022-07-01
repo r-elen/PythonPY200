@@ -36,5 +36,8 @@ files:
     if __name__ == "__main__":
         ...
   learner_created: false
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 01 Jul 2022 11:35:23 UTC
 record: -1

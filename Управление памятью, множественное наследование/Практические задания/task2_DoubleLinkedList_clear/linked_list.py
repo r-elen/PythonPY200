@@ -61,7 +61,7 @@ class LinkedList:
         node.value = value
 
     def to_list(self) -> list:
-        return [linked_list_value for linked_list_value in self]
+        return [linked_value for linked_value in self]
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.to_list()})"

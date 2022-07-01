@@ -1,4 +1,4 @@
-from typing import Any, Iterable, Optional
+from typing import Any, Optional
 
 
 class Node:
@@ -14,7 +14,7 @@ class Node:
         self.next = next_  # self.next - вызывается next.setter
 
     @classmethod
-    def is_valid(cls, node:Any) -> None:
+    def is_valid(cls, node: Any) -> None:
         if not isinstance(node, (cls, type(None))):
             raise TypeError
 

@@ -1,6 +1,7 @@
-from typing import Any, Optional
+from typing import Any, Iterable, Optional
 
 from node import Node, DoubleLinkedNode
+
 
 class LinkedList:
     def __init__(self, data: Iterable = None):
@@ -12,6 +13,10 @@ class LinkedList:
         self._len = 0
         self._head: Optional[Node] = None
         self._tail = self._head
+
+        if data is not None:
+            for value in data:
+                self.append(value)
 
     @staticmethod
     def linked_nodes(left_node: Node, right_node: Optional[Node] = None) -> None:
@@ -35,14 +40,20 @@ class LinkedList:
     def index_is_valid(self, index):
         if not isinstance(index, int):
             raise TypeError()
-        if not 0 <= index <= self._len:
-            raise IndexError()
+        if not 0 <= index <= self._len - 1:
+            raise IndexError("Значение индекса меньше 0 или больше длины списка")
 
     def step_by_step(self, index: int):
-        self.index_is_valid(index)
+        if not isinstance(index, int):
+            raise TypeError()
+
+        if not 0 <= index < self._len:  # для for
+            raise IndexError()
+
         current_node = self._head
         for _ in range(index):
             current_node = current_node.next
+
         return current_node
 
     def __getitem__(self, index) -> Any:
@@ -71,7 +82,6 @@ class LinkedList:
         node = self.step_by_step(index)
         node.value = None
 
-
     def __len__(self):
         """
         Подсчет длины связанного списка
@@ -88,11 +98,13 @@ class LinkedList:
         :param value: вставляемое значение
         """
         append_node = Node(value)
+
         if self._head is None:
             self._head = self._tail = append_node
         else:
             self.linked_nodes(self._tail, append_node)
             self._tail = append_node
+
         self._len += 1
 
     def insert(self, index, value):
@@ -144,22 +156,33 @@ class DoubleLinkedList(LinkedList):
         :param left_node: Левый или предыдущий узел
         :param right_node: Правый или следующий узел
         """
-        # left_node.next = right_node
+        left_node.next = right_node
         right_node.prev = left_node
 
     def insert(self, index, value):
         ...
 
     def append(self, value: Any):
-        ...
+        """
+                Добавление элемента в конец связного списка
+                :param value: вставляемое значение
+                """
+        append_node = DoubleLinkedNode(value)
+        if self._head is None:
+            self._head = self._tail = append_node
+        else:
+            self.linked_nodes(self._tail, append_node)
+            self._tail = append_node
+
+        self._len += 1
 
     def __delitem__(self, index):
         ...
 
 
 if __name__ == "__main__":
-    link_list = LinkedList([1, 2, 3])
-    print(link_list)
+    linked_list = LinkedList([1, 2, 3, 5])
+    print(linked_list.__getitem__(2))
 
-    doub_link_list = DoubleLinkedList([1, 2, 3])
-    print(doub_link_list)
+    double_link_list = DoubleLinkedList([1, 2, 3])
+    print(double_link_list)
