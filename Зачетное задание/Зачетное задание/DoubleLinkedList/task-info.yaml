@@ -36,6 +36,12 @@ files:
     if __name__ == "__main__":
         ...
   learner_created: false
+- name: test_linkednode.py
+  visible: true
+  learner_created: true
+- name: test_doublell.py
+  visible: true
+  learner_created: true
 status: Solved
 feedback:
   message: Congratulations!
