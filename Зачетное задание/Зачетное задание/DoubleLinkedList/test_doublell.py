@@ -1,12 +1,13 @@
 import unittest
 
+from task import DoubleLinkedNode
 from task import DoubleLinkedList
 
 
 class TestCaseDLL(unittest.TestCase):  # наследоваться от unittest.TestCase
     def test__getitem__(self):
 
-        linkedlist = LinkedList([1, 2, 3])
+        linkedlist = DoubleLinkedList([1, 2, 3])
 
         expected = 2
         actual = linkedlist.__getitem__(1)
@@ -35,9 +36,9 @@ class TestCaseDLL(unittest.TestCase):  # наследоваться от unittes
         current_node.next = next_node
         next_node.prev = current_node
 
-        expected_value = "DoubleLinkedNode((2, 'DoubleLinkedNode(3, None, None)', None))"
-        actual_value = repr(current_node)
-        print(actual_value)
+        expected = "DoubleLinkedNode((2, 'DoubleLinkedNode(3, None, None)', None))"
+        actual = repr(current_node)
+        # print(actual)
 
         self.assertEqual(expected, actual)
 
