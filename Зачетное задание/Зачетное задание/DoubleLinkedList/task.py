@@ -116,14 +116,20 @@ class LinkedList:
         :return: Связанный список с новым узлом
         """
         insert_node = Node(value)  # TODO insert
-        prev_node = self.step_by_step(index)
-        next_node = self.step_by_step(index+1)
 
-        self.linked_nodes(prev_node, insert_node)  # вставка узла к предыдущему узлу
-        self._tail = insert_node
+        if index == 0:
+            next_node = self.step_by_step(index)
 
-        self.linked_nodes(insert_node, next_node)  # вставка следующего узла к вставленному узлу
-        self._tail = next_node
+            self.linked_nodes(insert_node, next_node)  # вставка узла к начальному узлу
+            self._head = insert_node
+        elif index == self._len:
+            self.append(value)
+        else:
+            prev_node = self.step_by_step(index-1)
+            next_node = self.step_by_step(index)
+
+            self.linked_nodes(prev_node, insert_node)  # вставка узла к предыдущему узлу
+            self.linked_nodes(insert_node, next_node)  # вставка следующего узла к вставленному узлу
 
         self._len += 1
 
@@ -182,7 +188,8 @@ class DoubleLinkedList(LinkedList):
 
 if __name__ == "__main__":
     linked_list = LinkedList([1, 2, 3, 5])
-    print(linked_list.__getitem__(2))
+    ll_with_insert = linked_list.insert(2, 8)
+    print(ll_with_insert)
 
-    double_link_list = DoubleLinkedList([1, 2, 3])
-    print(double_link_list)
+    # double_link_list = DoubleLinkedList([1, 2, 3])
+    # print(double_link_list)
