@@ -116,7 +116,7 @@ class LinkedList(MutableSequence):
         :param value: значение
         :return: Связанный список с новым узлом
         """
-        insert_node = Node(value)  # TODO insert
+        insert_node = Node(value)
 
         if index == 0:
             next_node = self.step_by_step(index)
@@ -126,7 +126,7 @@ class LinkedList(MutableSequence):
         elif index == self._len:
             self.append(value)
         else:
-            prev_node = self.step_by_step(index-1)
+            prev_node = self.step_by_step(index - 1)
             next_node = self.step_by_step(index)
 
             self.linked_nodes(prev_node, insert_node)  # вставка узла к предыдущему узлу
@@ -140,19 +140,20 @@ class LinkedList(MutableSequence):
         :param index: индекс удаляемого узла
         """
         if index == 0:
-            self._head = self.step_by_step(index+1)  # как удалить первый узел? нужно ли удалять если ссылок на него все равно больше нет
+            self._head = self.step_by_step(
+                index + 1)  # TODO как удалить первый узел? нужно ли удалять если ссылок на него все равно больше нет
         elif index == self._len - 1:
             self.step_by_step(index).next = None
         elif index >= self._len:
             raise IndexError("Значение индекса больше длины связанного списка")
         else:
-            current_node = self.step_by_step(index)  # TODO delitem
-            prev_node = self.step_by_step(index-1)
+            current_node = self.step_by_step(index)
+            prev_node = self.step_by_step(index - 1)
             next_node = self.step_by_step(index + 1)
 
             self.linked_nodes(prev_node, next_node)  # связываение предыдущего и следующего от текущего узла
             self._tail = next_node
-         # после связывание след и пред как удалить current_node, который остался
+            # TODO после связывания след и пред как удалить current_node, который остался
             current_node.next = None
 
         self._len -= 1
@@ -163,25 +164,49 @@ class DoubleLinkedList(LinkedList):
         super().__init__(data)
 
     @staticmethod
-    def linked_nodes(left_node: Node, right_node: Optional[Node] = None) -> None:
+    def linked_nodes(left_node: DoubleLinkedNode, right_node: Optional[DoubleLinkedNode] = None) -> None:
         """
         Cвязывает между собой два узла в обе стороны (от текущей к следующией и наоборот)
 
         :param left_node: Левый или предыдущий узел
         :param right_node: Правый или следующий узел
         """
-        left_node.next = right_node
+
+        # super().linked_nodes() - ломается для @staticmethod поэтому можно пойти 2 путями
+        # left_node._next = right_node  # первый вариант - повторить предыдущий код
+        super(DoubleLinkedList, DoubleLinkedList).linked_nodes(left_node=left_node,
+                                                               right_node=right_node)  # второй вариант
+
         right_node.prev = left_node
 
     def insert(self, index, value):
-        ...
+        insert_node = DoubleLinkedNode(value)  # TODO как перегрузить не повторяя код если нужно изменить insert node
+
+        if index == 0:
+            next_node = self.step_by_step(index)
+            self.linked_nodes(insert_node, next_node)  # вставка узла к начальному узлу
+            self._head = insert_node
+
+        elif index == self._len:
+            self.append(value)
+
+        else:
+            prev_node = self.step_by_step(index - 1)
+            next_node = self.step_by_step(index)
+
+            self.linked_nodes(prev_node, insert_node)  # вставка узла к предыдущему узлу
+            self.linked_nodes(insert_node, next_node)  # вставка следующего узла к вставленному узлу
+
+        self._len += 1
 
     def append(self, value: Any):
         """
-                Добавление элемента в конец связного списка
-                :param value: вставляемое значение
-                """
-        append_node = DoubleLinkedNode(value)
+        Добавление элемента в конец связного списка
+        :param value: вставляемое значение
+        """
+        # super().append(value=value)
+        append_node = DoubleLinkedNode(value)  # TODO как перегрузить не повторяя код если нужно изменить append node
+
         if self._head is None:
             self._head = self._tail = append_node
         else:
@@ -190,16 +215,18 @@ class DoubleLinkedList(LinkedList):
 
         self._len += 1
 
-    def __delitem__(self, index):
-        ...
-
 
 if __name__ == "__main__":
-    linked_list = LinkedList([1, 2, 3, 5])
-    linked_list.insert(2, 8)  # выводится значение None если сразу выводить: print(linked_list.insert(2, 8))
-    print(linked_list)
-    linked_list.del_node(3)
-    print(linked_list)
+    # linked_list = LinkedList([1, 2, 3, 5])
+    # linked_list.insert(2, 8)  # выводится значение None если сразу выводить: print(linked_list.insert(2, 8))
+    # print(linked_list)
+    # linked_list.del_node(3)
+    # print(linked_list)
 
-    # double_link_list = DoubleLinkedList([1, 2, 3])
-    # print(double_link_list)
+    doubleLL = DoubleLinkedList([1, 2, 3])
+    doubleLL.append(4)
+    print(doubleLL)
+    doubleLL.insert(2, 0)
+    print(doubleLL)
+    doubleLL.del_node(1)
+    print(doubleLL)
