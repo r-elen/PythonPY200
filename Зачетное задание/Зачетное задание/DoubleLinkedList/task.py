@@ -1,9 +1,10 @@
 from typing import Any, Iterable, Optional
+from collections.abc import MutableSequence
 
 from node import Node, DoubleLinkedNode
 
 
-class LinkedList:
+class LinkedList(MutableSequence):
     def __init__(self, data: Iterable = None):
         """
         Конструктор связаного списка
@@ -138,14 +139,21 @@ class LinkedList:
         Удаление узла по индексу
         :param index: индекс удаляемого узла
         """
-        current_node = self.step_by_step(index)  # TODO delitem
-        prev_node = self.step_by_step(index-1)
-        next_node = self.step_by_step(index + 1)
+        if index == 0:
+            self._head = self.step_by_step(index+1)  # как удалить первый узел? нужно ли удалять если ссылок на него все равно больше нет
+        elif index == self._len - 1:
+            self.step_by_step(index).next = None
+        elif index >= self._len:
+            raise IndexError("Значение индекса больше длины связанного списка")
+        else:
+            current_node = self.step_by_step(index)  # TODO delitem
+            prev_node = self.step_by_step(index-1)
+            next_node = self.step_by_step(index + 1)
 
-        self.linked_nodes(prev_node, next_node)  # связываение предыдущего и следующего от текущего узла
-        self._tail = next_node
-
-        current_node.next = None
+            self.linked_nodes(prev_node, next_node)  # связываение предыдущего и следующего от текущего узла
+            self._tail = next_node
+         # после связывание след и пред как удалить current_node, который остался
+            current_node.next = None
 
         self._len -= 1
 
@@ -188,8 +196,10 @@ class DoubleLinkedList(LinkedList):
 
 if __name__ == "__main__":
     linked_list = LinkedList([1, 2, 3, 5])
-    ll_with_insert = linked_list.insert(2, 8)
-    print(ll_with_insert)
+    linked_list.insert(2, 8)  # выводится значение None если сразу выводить: print(linked_list.insert(2, 8))
+    print(linked_list)
+    linked_list.del_node(3)
+    print(linked_list)
 
     # double_link_list = DoubleLinkedList([1, 2, 3])
     # print(double_link_list)
