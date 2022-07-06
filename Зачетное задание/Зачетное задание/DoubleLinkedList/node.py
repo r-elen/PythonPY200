@@ -16,7 +16,7 @@ class Node:
     @classmethod
     def is_valid(cls, node: Any) -> None:
         if not isinstance(node, (cls, type(None))):
-            raise TypeError
+            raise TypeError(f"Тип узла должен быть {cls}, вместо этого {type(node)}")
 
     @property
     def next(self):

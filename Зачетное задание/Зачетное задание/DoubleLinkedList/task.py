@@ -5,6 +5,7 @@ from node import Node, DoubleLinkedNode
 
 
 class LinkedList(MutableSequence):
+    CLASS_NODE = Node
     def __init__(self, data: Iterable = None):
         """
         Конструктор связаного списка
@@ -48,8 +49,7 @@ class LinkedList(MutableSequence):
         if not isinstance(index, int):
             raise TypeError()
 
-        if not 0 <= index < self._len:  # для for
-            raise IndexError("Индекс больше или меньше допустимого значения")
+        self.index_is_valid(index)  # переписана проверка (DRY - есть метод)
 
         current_node = self._head
         for _ in range(index):
@@ -83,7 +83,7 @@ class LinkedList(MutableSequence):
         node = self.step_by_step(index)
         node.value = None
 
-    def __len__(self):
+    def __len__(self):  # переписан так как абстрактный класс
         """
         Подсчет длины связанного списка
         :return: кол-во узлов
@@ -98,7 +98,7 @@ class LinkedList(MutableSequence):
         Добавление элемента в конец связного списка
         :param value: вставляемое значение
         """
-        append_node = Node(value)
+        append_node = self.CLASS_NODE(value)  # добавлено для того чтобы не перезаписывать метод для DoubleLinkedList
 
         if self._head is None:
             self._head = self._tail = append_node
@@ -116,15 +116,15 @@ class LinkedList(MutableSequence):
         :param value: значение
         :return: Связанный список с новым узлом
         """
-        insert_node = Node(value)
+        insert_node = self.CLASS_NODE(value)
+
+        self.index_is_valid(index)
 
         if index == 0:
             next_node = self.step_by_step(index)
 
             self.linked_nodes(insert_node, next_node)  # вставка узла к начальному узлу
             self._head = insert_node
-        elif index == self._len:
-            self.append(value)
         else:
             prev_node = self.step_by_step(index - 1)
             next_node = self.step_by_step(index)
@@ -139,26 +139,24 @@ class LinkedList(MutableSequence):
         Удаление узла по индексу
         :param index: индекс удаляемого узла
         """
+        self.index_is_valid(index)
+
         if index == 0:
-            self._head = self.step_by_step(index + 1)  # TODO как удалить первый узел? нужно ли удалять если ссылок на него все равно больше нет ссылок
+            self._head = self._head.next
         elif index == self._len - 1:
-            self.step_by_step(index).next = None
+            self.step_by_step(index-1).next = None
+            self._tail = self.step_by_step(index-1)
         else:
-            current_node = self.step_by_step(index)
             prev_node = self.step_by_step(index - 1)
             next_node = self.step_by_step(index + 1)
 
             self.linked_nodes(prev_node, next_node)  # связываение предыдущего и следующего от текущего узла
-            self._tail = next_node
-            # TODO после связывания след и пред как удалить current_node, который остался
-            current_node.next = None
 
         self._len -= 1
 
 
 class DoubleLinkedList(LinkedList):
-    def __init__(self, data: Iterable = None):
-        super().__init__(data)
+    CLASS_NODE = DoubleLinkedNode  # Определяем какими узлами пользуется класс DoubleLinkedList
 
     @staticmethod
     def linked_nodes(left_node: DoubleLinkedNode, right_node: Optional[DoubleLinkedNode] = None) -> None:
@@ -170,62 +168,26 @@ class DoubleLinkedList(LinkedList):
         """
 
         # super().linked_nodes() - ломается для @staticmethod поэтому можно пойти 2 путями
-        # left_node._next = right_node  # первый вариант - повторить предыдущий код
-        super(DoubleLinkedList, DoubleLinkedList).linked_nodes(left_node=left_node,
-                                                               right_node=right_node)  # второй вариант
+        # super(DoubleLinkedList, DoubleLinkedList).linked_nodes(left_node=left_node,
+        #                                                        right_node=right_node)  # первый вариант
 
+        left_node._next = right_node  # второй вариант - повторить предыдущий код
         right_node.prev = left_node
-
-    def insert(self, index, value):
-        insert_node = DoubleLinkedNode(value)  # TODO как перегрузить не повторяя код если нужно изменить insert node
-
-        if index == 0:
-            next_node = self.step_by_step(index)
-            self.linked_nodes(insert_node, next_node)  # вставка узла к начальному узлу
-            self._head = insert_node
-
-        elif index == self._len:
-            self.append(value)
-
-        else:
-            prev_node = self.step_by_step(index - 1)
-            next_node = self.step_by_step(index)
-
-            self.linked_nodes(prev_node, insert_node)  # вставка узла к предыдущему узлу
-            self.linked_nodes(insert_node, next_node)  # вставка следующего узла к вставленному узлу
-
-        self._len += 1
-
-    def append(self, value: Any):
-        """
-        Добавление элемента в конец связного списка
-        :param value: вставляемое значение
-        """
-        # super().append(value=value)
-        append_node = DoubleLinkedNode(value)  # TODO как перегрузить не повторяя код если нужно изменить append node
-
-        if self._head is None:
-            self._head = self._tail = append_node
-        else:
-            self.linked_nodes(self._tail, append_node)
-            self._tail = append_node
-
-        self._len += 1
 
 
 if __name__ == "__main__":
-    linked_list = LinkedList([1, 2, 3, 5])
-    linked_list.insert(3, 8)  # выводится значение None если сразу выводить: print(linked_list.insert(2, 8))
-    print(linked_list)
-    linked_list.del_node(2)
-    print(linked_list)
+    # linked_list = LinkedList([1, 2, 3, 5])
+    # linked_list.insert(3, 8)  # выводится значение None если сразу выводить: print(linked_list.insert(2, 8))
+    # print(linked_list)
+    # linked_list.del_node(2)
+    # print(linked_list)
+    #
+    # print("-" * 40)
 
-    print("-" * 40)
-
-    doubleLL = DoubleLinkedList([1, 2, 3])
-    doubleLL.append(4)
+    doubleLL = DoubleLinkedList([1])
+    # doubleLL.append(4)
+    # print(doubleLL)
+    doubleLL.insert(0, 2)
     print(doubleLL)
-    doubleLL.insert(2, 0)
-    print(doubleLL)
-    doubleLL.del_node(1)
-    print(doubleLL)
+    # doubleLL.del_node(0)
+    # print(doubleLL)

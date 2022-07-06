@@ -75,6 +75,9 @@ class TestCaseDLL(unittest.TestCase):  # наследоваться от unittes
 
         self.assertEqual(expected, actual)
 
+    def test_linked_node(self):
+        DoubleLinkedList.linked_nodes(DoubleLinkedNode(5), DoubleLinkedNode(5))
+
 
 if __name__ == "__main__":
     # Write your solution here

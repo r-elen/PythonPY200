@@ -54,6 +54,12 @@ class TestCaseLL(unittest.TestCase):  # наследоваться от unittest
 
         self.assertEqual(expected, actual)
 
+    def test_del_first_node_from_empty_list(self):
+        linkedlist = LinkedList()
+
+        with self.assertRaises(IndexError):
+            linkedlist.del_node(0)
+
     def test_del_node_last(self):
         linkedlist = LinkedList([1, 2, 3])
 
@@ -63,6 +69,7 @@ class TestCaseLL(unittest.TestCase):  # наследоваться от unittest
         actual = f"{linkedlist}"
 
         self.assertEqual(expected, actual)
+        self.assertEqual(str(linkedlist._tail), "2")
 
     def test_insert(self):
         linkedlist = LinkedList([1, 2, 3])
@@ -71,7 +78,6 @@ class TestCaseLL(unittest.TestCase):  # наследоваться от unittest
 
         expected = str([1, 8, 2, 3])
         actual = f"{linkedlist}"
-        print(actual)
 
         self.assertEqual(expected, actual)
 
@@ -84,6 +90,30 @@ class TestCaseLL(unittest.TestCase):  # наследоваться от unittest
         actual = f"{linkedlist}"
 
         self.assertEqual(expected, actual)
+
+    def test_len_insert_over_index(self):
+        """когда индекс > len """
+        # todo check len
+        linkedlist = LinkedList([1, 2, 3])
+
+        with self.assertRaises(IndexError):  # с помощью менеджера контакста и метода assertRaises проверить корректность вызываемой ошибки
+            linkedlist.insert(index=25, value=8)
+
+    def test_error_insert_after_last_node(self):
+        """когда индекс равен len"""
+        linkedlist = LinkedList([1, 2, 3])
+
+        with self.assertRaises(
+                IndexError):  # с помощью менеджера контакста и метода assertRaises проверить корректность вызываемой ошибки
+            linkedlist.insert(index=3, value=8)
+
+    def test_error_insert_over_index(self):
+        """когда индекс > len """
+        # todo check len
+        linkedlist = LinkedList([1, 2, 3])
+
+        with self.assertRaises(IndexError):  # с помощью менеджера контакста и метода assertRaises проверить корректность вызываемой ошибки
+            linkedlist.insert(index=25, value=8)
 
 
 if __name__ == "__main__":
