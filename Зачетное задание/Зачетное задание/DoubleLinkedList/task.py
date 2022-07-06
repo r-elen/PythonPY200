@@ -217,11 +217,14 @@ class DoubleLinkedList(LinkedList):
 
 
 if __name__ == "__main__":
-    # linked_list = LinkedList([1, 2, 3, 5])
-    # linked_list.insert(2, 8)  # выводится значение None если сразу выводить: print(linked_list.insert(2, 8))
-    # print(linked_list)
-    # linked_list.del_node(3)
-    # print(linked_list)
+    linked_list = LinkedList([1, 2, 3, 5])
+    linked_list.insert(2, 8)  # выводится значение None если сразу выводить: print(linked_list.insert(2, 8))
+    print(linked_list)
+    linked_list.del_node(3)
+    print(linked_list)
+
+    print("-" * 40)
+
 
     doubleLL = DoubleLinkedList([1, 2, 3])
     doubleLL.append(4)

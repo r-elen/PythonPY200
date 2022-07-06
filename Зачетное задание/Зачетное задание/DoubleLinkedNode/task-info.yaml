@@ -48,9 +48,8 @@ files:
     if __name__ == "__main__":
         ...
   learner_created: false
-status: Unchecked
+status: Solved
 feedback:
-  message: No tests have run. For more information, see <a href="https://www.jetbrains.com/help/education/troubleshooting-guide.html#no_tests_have_run">the
-    Troubleshooting guide</a>
-  time: Tue, 28 Jun 2022 08:43:23 UTC
+  message: Congratulations!
+  time: Tue, 05 Jul 2022 13:07:19 UTC
 record: -1
