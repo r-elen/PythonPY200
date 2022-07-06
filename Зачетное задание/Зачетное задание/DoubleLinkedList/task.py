@@ -49,7 +49,7 @@ class LinkedList(MutableSequence):
             raise TypeError()
 
         if not 0 <= index < self._len:  # для for
-            raise IndexError()
+            raise IndexError("Индекс больше или меньше допустимого значения")
 
         current_node = self._head
         for _ in range(index):
@@ -89,7 +89,7 @@ class LinkedList(MutableSequence):
         :return: кол-во узлов
         """
         len_ = 0
-        for _ in self:  # TODO len
+        for _ in self:
             len_ += 1
         return f"{len_}"
 
@@ -140,12 +140,9 @@ class LinkedList(MutableSequence):
         :param index: индекс удаляемого узла
         """
         if index == 0:
-            self._head = self.step_by_step(
-                index + 1)  # TODO как удалить первый узел? нужно ли удалять если ссылок на него все равно больше нет
+            self._head = self.step_by_step(index + 1)  # TODO как удалить первый узел? нужно ли удалять если ссылок на него все равно больше нет ссылок
         elif index == self._len - 1:
             self.step_by_step(index).next = None
-        elif index >= self._len:
-            raise IndexError("Значение индекса больше длины связанного списка")
         else:
             current_node = self.step_by_step(index)
             prev_node = self.step_by_step(index - 1)
@@ -218,13 +215,12 @@ class DoubleLinkedList(LinkedList):
 
 if __name__ == "__main__":
     linked_list = LinkedList([1, 2, 3, 5])
-    linked_list.insert(2, 8)  # выводится значение None если сразу выводить: print(linked_list.insert(2, 8))
+    linked_list.insert(3, 8)  # выводится значение None если сразу выводить: print(linked_list.insert(2, 8))
     print(linked_list)
-    linked_list.del_node(3)
+    linked_list.del_node(2)
     print(linked_list)
 
     print("-" * 40)
-
 
     doubleLL = DoubleLinkedList([1, 2, 3])
     doubleLL.append(4)

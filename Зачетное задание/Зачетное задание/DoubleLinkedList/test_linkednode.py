@@ -44,6 +44,26 @@ class TestCaseLL(unittest.TestCase):  # наследоваться от unittest
 
         self.assertEqual(expected, actual)
 
+    def test_del_node_first(self):
+        linkedlist = LinkedList([1, 2, 3])
+
+        linkedlist.del_node(0)
+
+        expected = str([2, 3])
+        actual = f"{linkedlist}"
+
+        self.assertEqual(expected, actual)
+
+    def test_del_node_last(self):
+        linkedlist = LinkedList([1, 2, 3])
+
+        linkedlist.del_node(2)
+
+        expected = str([1, 2])
+        actual = f"{linkedlist}"
+
+        self.assertEqual(expected, actual)
+
     def test_insert(self):
         linkedlist = LinkedList([1, 2, 3])
 

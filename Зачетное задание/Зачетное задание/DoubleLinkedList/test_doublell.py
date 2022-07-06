@@ -42,6 +42,39 @@ class TestCaseDLL(unittest.TestCase):  # наследоваться от unittes
 
         self.assertEqual(expected, actual)
 
+    def test_del_node(self):
+        """
+        Проверка удаления узла по индексу
+        """
+
+        double_ll = DoubleLinkedList([1, 2, 3])
+        double_ll.del_node(1)
+
+        expected = str([1, 3])
+        actual = f"{double_ll}"
+
+        self.assertEqual(expected, actual)
+
+    def test_del_node_first(self):
+        linkedlist = DoubleLinkedList([1, 2, 3])
+
+        linkedlist.del_node(0)
+
+        expected = str([2, 3])
+        actual = f"{linkedlist}"
+
+        self.assertEqual(expected, actual)
+
+    def test_del_node_last(self):
+        linkedlist = DoubleLinkedList([1, 2, 3])
+
+        linkedlist.del_node(2)
+
+        expected = str([1, 2])
+        actual = f"{linkedlist}"
+
+        self.assertEqual(expected, actual)
+
 
 if __name__ == "__main__":
     # Write your solution here

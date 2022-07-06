@@ -24,7 +24,7 @@ class Node:
         if not isinstance(node, (type(None), Node)):
             raise TypeError
 
-    # TODO заменить на getter и setter
+    # заменить на getter и setter
     @property
     def next(self):
         return self.__next
